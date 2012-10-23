@@ -1,3 +1,9 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  class Action < ApplicationController
+    include FocusedController::Mixin
+
+    respond_to :json
+    
+    before_filter {request.format = :json}
+  end
 end
