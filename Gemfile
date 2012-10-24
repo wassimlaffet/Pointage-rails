@@ -24,9 +24,26 @@ gem 'jquery-rails'
 
 gem 'mongoid'
 gem 'focused_controller'
-
+gem 'devise'
 gem 'oj'
 gem 'rabl-rails', '~> 0.2.0'
+
+
+group :development do
+  gem 'rspec-rails'
+  # gem 'debugger'
+  gem 'benchmark_suite'
+end
+
+group :test do
+  gem 'rspec'
+  gem 'rspec-http'
+  gem 'factory_girl_rails'
+  gem 'mock_redis'
+  gem 'database_cleaner'
+  gem 'timecop'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
