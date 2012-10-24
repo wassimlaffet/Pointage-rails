@@ -40,10 +40,13 @@ group :test do
   gem 'rspec-http'
   gem 'factory_girl_rails'
   gem 'mock_redis'
-  gem 'database_cleaner'
   gem 'timecop'
 end
 
+gem 'database_cleaner'
+gem 'resque'
+gem 'resque-scheduler', require: 'resque_scheduler'
+gem 'whenever', :require => false
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

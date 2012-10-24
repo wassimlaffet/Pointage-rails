@@ -1,9 +1,12 @@
 PointageRails::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
+  
+  devise_for :users
+  
   focused_controller_routes do
     resources :users
+    resources :pointages
   end
 
   # Sample of regular route:
