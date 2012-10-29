@@ -1,16 +1,18 @@
 
 module UsersController
   class Action < ApplicationController::Action
-    #before_filter :authenticate_user!
+    puts ":authenticate_user!"
+    before_filter :authenticate_user!
   end
 
   class Index < Action
+    puts "Index"
     expose(:users) { User.all }
-    puts "yyyyyy"
-     Resque.enqueue(TestJob, 0)
+    #Resque.enqueue(TestJob, 0)
   end
   
   class Create < Action
+    puts "Create"
     expose(:user)
 
     def call
