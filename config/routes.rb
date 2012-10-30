@@ -9,6 +9,7 @@ PointageRails::Application.routes.draw do
     resources :pointages 
      get '/pointage/update' => 'pointages#update'
       get '/pointage/create' => 'pointages#create'
+      get 'user/delete' => 'users#destroy'
   end
 
   # Sample of regular route:
