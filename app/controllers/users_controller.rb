@@ -5,6 +5,10 @@ module UsersController
     before_filter :authenticate_user!
   end
 
+  class Singular < Action
+    expose(:user) { User.find(params[:id]) }
+  end
+
   class Index < Action
     puts "Index"
     expose(:users) { User.all }
@@ -23,4 +27,14 @@ module UsersController
       #redirect_to users_url
     end
   end  
+  
+  class Destroy < Action
+    puts "Destroy"
+     expose(:user) { User.find(params[:id]) }
+    def call   
+      flash[:error] = "Could not delete User " if !user.destroy         
+      respond_with(user, location: users_url)
+    end
+  end
+  
 end

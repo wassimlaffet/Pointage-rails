@@ -6,7 +6,9 @@ PointageRails::Application.routes.draw do
   
   focused_controller_routes do
     resources :users
-    resources :pointages
+    resources :pointages 
+     get '/pointage/update' => 'pointages#update'
+      get '/pointage/create' => 'pointages#create'
   end
 
   # Sample of regular route:
