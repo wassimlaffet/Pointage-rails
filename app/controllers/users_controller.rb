@@ -27,13 +27,14 @@ module UsersController
     end
   end
 
-  class Destroy < Singular
+  class Destroy < Action
+    expose(:user_del){User.where(:id => params[:id]).first}
     def call
-      if !user.destroy
-        flash[:error] = "Can not delete user"
+      puts "++++++++++++++++++++++++++#{user_del}"
+      if !user_del.destroy
         respond_with("can not delete this user !!!!!!!!!!!!!!!!!",location: users_url)
       else
-        respond_with(user,location: users_url)
+        respond_with("user_del okiii #{user_del}",location: users_url)
       end
     end
   end
