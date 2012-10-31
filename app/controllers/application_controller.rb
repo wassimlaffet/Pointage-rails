@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
     include FocusedController::Mixin
 
     respond_to :json
-    
+
     before_filter {request.format = :json}
   end
+  
 end

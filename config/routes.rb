@@ -2,11 +2,16 @@ PointageRails::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
   
-  devise_for :users
+   devise_for :users do
+    get '/user/sign_out' => 'devise/sessions#destroy'
+  end
   
   focused_controller_routes do
     resources :users
     resources :pointages 
+     get '/pointage/findbetween' => 'pointages#findpointagebetween'
+    get '/pointage/findlast' => 'pointages#findlastpointage'
+    get '/pointage/findall' => 'pointages#findallpointagebyuser'
      get '/pointage/update' => 'pointages#update'
       get '/pointage/create' => 'pointages#create'
       get 'user/delete' => 'users#destroy'
