@@ -1,6 +1,16 @@
 module PointagesController
   class Action < ApplicationController::Action
     before_filter :authenticate_user!
+    def format_pointage(pointages)
+      tab = Array.new()
+      pointages.each do |point|
+        @pointage= Hash.new()
+        @pointage["point"] = point
+        @pointage["user"] = point.user
+        tab << @pointage
+      end
+      return tab
+    end
   end
 
   class Singular < Action
@@ -8,31 +18,48 @@ module PointagesController
   end
 
   class Index < Singular
-    expose(:pointages) {Pointage.where(:user_id => current_user.id)}
+    expose(:pointages) {
+      if !current_user.admin?
+        Pointage.where(:user_id => current_user.id)
+      else
+        Pointage.all
+      end
+    }
   end
 
-  class Findallpointagebyuser < Singular
+  class Findallpointagebyuser < Index
     expose(:all_pointages){pointages.all}
 
     def call
-      respond_with(all_pointages,location: pointages_url)
+      @result = format_pointage(all_pointages)
+      respond_with(@result,location: pointages_url)
     end
+
   end
 
   class Findlastpointage < Singular
     expose(:last_pointages){pointages.last}
 
     def call
-      Resque.enqueue(TestJob)
-      respond_with(last_pointages,location: pointages_url)
+      @result = format_pointage(last_pointages)
+      respond_with(@result,location: pointages_url)
     end
   end
 
-  class Findpointagebetween < Singular
-    expose(:between_pointages){pointages.between(:heure_start => Date.parse(params[:inf]) .. Date.parse(params[:sup])+1)}
+  class Findpointagebetween < Index
+    expose(:between_pointages){
+      if !(params[:inf]).nil? && !(params[:sup]).nil?
+        pointages.between(:heure_start => Date.parse(params[:inf]) .. Date.parse(params[:sup])+1)
+      elsif !(params[:sup]).nil?
+        pointages.where(:heure_start.gte => Date.parse(params[:sup])+1)
+      elsif !(params[:inf]).nil?
+        pointages.where(:heure_start.lte => Date.parse(params[:inf]))
+      end
+    }
 
     def call
-      respond_with(between_pointages,location: pointages_url)
+      @result = format_pointage(between_pointages)
+      respond_with(@result,location: pointages_url)
     end
   end
 
