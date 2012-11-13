@@ -15,6 +15,7 @@ PointageRails::Application.routes.draw do
     get '/pointage/update' => 'pointages#update'
     get '/pointage/create' => 'pointages#create'
     get 'user/delete' => 'users#destroy'
+    get 'user/calcul' => 'users#Calculduree'
   end
 
 # Sample of regular route:

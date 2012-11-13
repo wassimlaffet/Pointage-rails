@@ -10,7 +10,6 @@ module UsersController
 
   class Index < Singular
     expose(:users) { user}
-  #Resque.enqueue(TestJob, 0)
   end
 
   class Create < Action

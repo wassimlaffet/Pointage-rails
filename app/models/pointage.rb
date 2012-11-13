@@ -7,5 +7,5 @@ class Pointage
   field :hp,  as: :heure_pause,    type: DateTime
   field :hr,  as: :heure_reprise,  type: DateTime
   field :he,  as: :heure_end,      type: DateTime  
-  
+  field :dr,  as: :duree,          type: Float,  default: nil
 end

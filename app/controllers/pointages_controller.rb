@@ -23,6 +23,7 @@ module PointagesController
     expose(:last_pointages){pointages.last}
 
     def call
+      Resque.enqueue(TestJob)
       respond_with(last_pointages,location: pointages_url)
     end
   end
