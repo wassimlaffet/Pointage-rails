@@ -34,15 +34,15 @@ module PointagesController
       @result = format_pointage(all_pointages)
       respond_with(@result,location: pointages_url)
     end
-
+    
   end
 
   class Findlastpointage < Singular
     expose(:last_pointages){pointages.last}
 
     def call
-      @result = format_pointage(last_pointages)
-      respond_with(@result,location: pointages_url)
+      #Resque.enqueue(TestJob)
+      respond_with(last_pointages,location: pointages_url)
     end
   end
 
@@ -58,7 +58,7 @@ module PointagesController
     }
 
     def call
-      @result = format_pointage(between_pointages)
+        @result = format_pointage(between_pointages)
       respond_with(@result,location: pointages_url)
     end
   end
