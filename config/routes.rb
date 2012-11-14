@@ -8,7 +8,7 @@ PointageRails::Application.routes.draw do
     
     resources :users
     get '/user/delete' => 'users#destroy'
-    post '/user/update' => 'users#updateSoldeUsers'
+    post '/user/update' => 'users#updatesoldeusers'
     get '/user/getall' => 'users#showall'
     
     resources :pointages
