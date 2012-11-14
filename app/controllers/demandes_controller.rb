@@ -54,11 +54,11 @@ module DemandesController
     def call
       if params[:demandes]
         params[:demandes].each do |demande|
-          users = User.where(_id: demande["user_id"])
-          if users.exists?
-            dems = users.first.demandes.where(_id: demande["id"])
-            if dems.exists?
-              dems.first.valider
+          user = User.where(_id: demande["user_id"]).first
+          if user
+            dem = user.demandes.where(_id: demande["id"]).first
+            if dem
+              dem.valider
             end
           end
         end
