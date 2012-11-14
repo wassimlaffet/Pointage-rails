@@ -1,0 +1,1 @@
+attributes :_id, :_type, :date_creation, :date_depart, :date_retour

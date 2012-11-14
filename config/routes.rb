@@ -5,15 +5,20 @@ PointageRails::Application.routes.draw do
   devise_for :users
 
   focused_controller_routes do
+    
     resources :users
+    get '/user/delete' => 'users#destroy'
+    post '/user/update' => 'users#updateSoldeUsers'
+    
     resources :pointages
     get '/pointage/findbetween' => 'pointages#findpointagebetween'
     get '/pointage/findall' => 'pointages#findallpointagebyuser'
     get '/pointage/update' => 'pointages#update'
     get '/pointage/create' => 'pointages#create'
-    get 'user/delete' => 'users#destroy'
-    post '/user/update' => 'users#updateSoldeUsers'
+    
     resources :demandes
+    post '/demandes/valider' => 'demandes#valider'
+    post '/demandes/bydate' => 'demandes#ByDate'
   end
 
 # Sample of regular route:

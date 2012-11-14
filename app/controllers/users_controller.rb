@@ -1,6 +1,6 @@
 module UsersController
   class Action < ApplicationController::Action
-    #before_filter :authenticate_user!
+  #before_filter :authenticate_user!
   end
 
   class Singular < Action
@@ -17,20 +17,20 @@ module UsersController
     }
   end
 
-  class UpdateSoldeUsers < Index    
+  class UpdateSoldeUsers < Index
     def call
-    users = params[:users]
-    updatedUsers = Array.new()
-    users.each do |user|
-      if !user[:id].nil?
-      current = User.find(user[:id])
-      current.update_attribute(:sc,user[:sc]) if !user[:sc].nil?
-      current.update_attribute(:sr,user[:sr]) if !user[:sr].nil?
-      current.update_attribute(:admin,user[:admin]) if !user[:admin].nil?
-      updatedUsers << current
+      users = params[:users]
+      updatedUsers = Array.new()
+      users.each do |user|
+        if !user[:id].nil?
+          current = User.find(user[:id])
+          current.update_attribute(:sc,user[:sc]) if !user[:sc].nil?
+          current.update_attribute(:sr,user[:sr]) if !user[:sr].nil?
+          current.update_attribute(:admin,user[:admin]) if !user[:admin].nil?
+        updatedUsers << current
+        end
       end
-    end
-        respond_with(updatedUsers,location: users_url)   
+      respond_with(updatedUsers,location: users_url)
     end
   end
 
