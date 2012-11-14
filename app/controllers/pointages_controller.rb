@@ -2,7 +2,7 @@ module PointagesController
   class Action < ApplicationController::Action
     
     include ApplicationHelper::Status
-    #before_filter :authenticate_user!
+    before_filter :authenticate_user!
 
     def calculDuree (point, param)
       if(param == VALUE_MAP[HEURE_PAUSE])
@@ -32,9 +32,17 @@ module PointagesController
   end
 
   class Findallpointagebyuser < Index
-    expose(:all_pointages){
-      pointages.all
-    }
+    expose(:all_pointages){Array.new}
+
+      def call
+        if(params[:mail].nil?)
+      @all_pointages = pointages.all.to_a
+      else
+        pointages.each do |point|
+          all_pointages << point if point.user.email == params[:mail]
+        end     
+      end
+      end
   end
 
   class Findpointagebetween < Index
@@ -50,11 +58,11 @@ module PointagesController
   end
 
   class Create < Index
-    expose(:pointage_exist){pointages.where(:heure_start.gt => Date.today)}
+    expose(:pointage_exist){pointages.where(:heure_start.gte => Date.today)}
 
     def call
       if pointage_exist.count > 0
-        respond_with("Pointage already exist !!!!!!!!!!!!!!!!!",location: pointages_url)
+        respond_with("Pointage already exist !!!!!!",location: pointages_url)
       else
         pointage = Pointage.new()
         pointage.user_id = current_user.id
@@ -70,14 +78,19 @@ module PointagesController
   end
 
   class Update < Singular
-    expose(:point) {pointages.last}
+    expose(:point) {pointages.where(:heure_start.gte => Date.today).last}
 
     def call
+      if(!point.nil?)
       point.update_attribute(params[:type], DateTime.now)
       duree = calculDuree(point,params[:type])
       point.update_attribute(:dr, duree)
       point.save
       respond_with(point)
+      else
+         respond_with("warning : pas de pointage", location:pointages_url)
+      end
+      
     end
   end
 

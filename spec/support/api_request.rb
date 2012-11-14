@@ -7,10 +7,10 @@ module ApiRequest
 
     render_views
 
-    # let(:current_user) { User.create(email: "laffetwassim@gmail.com", password: "aaaaaa") }
+     let(:current_user) { User.first }
 
     before do
-      # login_as current_user
+       login_as current_user
       request.env['Content-Type'] = Mime::JSON
       request.env['HTTP_ACCEPT']  = Mime::JSON
     end

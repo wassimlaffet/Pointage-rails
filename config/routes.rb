@@ -9,13 +9,14 @@ PointageRails::Application.routes.draw do
     resources :users
     get '/user/delete' => 'users#destroy'
     post '/user/update' => 'users#updateSoldeUsers'
+    get '/user/getall' => 'users#showall'
     
     resources :pointages
     get '/pointage/findbetween' => 'pointages#findpointagebetween'
     get '/pointage/findall' => 'pointages#findallpointagebyuser'
     get '/pointage/update' => 'pointages#update'
     get '/pointage/create' => 'pointages#create'
-    
+
     resources :demandes
     post '/demandes/valider' => 'demandes#valider'
     post '/demandes/bydate' => 'demandes#ByDate'
