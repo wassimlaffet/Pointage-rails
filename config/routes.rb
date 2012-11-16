@@ -8,12 +8,11 @@ PointageRails::Application.routes.draw do
     resources :users
     resources :pointages
     get '/pointage/findbetween' => 'pointages#findpointagebetween'
-  get '/pointage/calcul' => 'pointages#calcul'
     get '/pointage/findall' => 'pointages#findallpointagebyuser'
     get '/pointage/update' => 'pointages#update'
     get '/pointage/create' => 'pointages#create'
     get 'user/delete' => 'users#destroy'
-    
+    post '/user/update' => 'users#updateSoldeUsers'
     resources :demandes
   end
 
