@@ -41,12 +41,14 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
   
-  has_many :pointages
-  
   field :sc,        as: :solde_conge,         type: Float, :default => 0
   field :sr,        as: :solde_recup,         type: Float, :default => 0
   field :name,                                type: String
   field :admin,                               type: Boolean, :default => false
-    #validates :email, presence: true, format: { with: /\A[a-z0-9]([\w+-]\.?)*@([\w]+\.)+[a-z]{2,3}\z/i }
+  #validates :email, presence: true, format: { with: /\A[a-z0-9]([\w+-]\.?)*@([\w]+\.)+[a-z]{2,3}\z/i }
+      
+  has_many :pointages
+  
+  embeds_many :demandes  
   
 end
