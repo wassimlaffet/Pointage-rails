@@ -1,0 +1,5 @@
+do_my_job:
+  every: 30s
+  class: TestJob
+  args:
+  description: Runs the perform method in MyJob

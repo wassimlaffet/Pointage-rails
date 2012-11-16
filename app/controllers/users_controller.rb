@@ -12,17 +12,14 @@ module UsersController
     expose(:users) { user}
   end
 
-  class Create < Action
-    puts "Create"
+  class Create < ApplicationController::Action
     expose(:user)
-    def call
-      puts "called in post count = #{User.count}"
+    def call   
       @user = User.new(params[:user])
       user.name = @user.email.split("@")[0]
       puts user
       user.save
       respond_with(user, location: users_url)
-    #redirect_to users_url
     end
   end
 

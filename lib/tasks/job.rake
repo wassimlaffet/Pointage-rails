@@ -1,5 +1,5 @@
 namespace :pointage do
   task :perform do
-    TestJob.perform 0
+    TestJob.perform
   end
 end

@@ -7,10 +7,14 @@
 #
 # set :output, "/path/to/my/cron_log.log"
 #
-every 1.minutes do
-  # command "/usr/bin/some_great_command"
-  # runner "TestJob.perform 0"
-  rake "pointage:perform"
+
+set :environment, :development
+set :output, 'app/log/development.log'
+
+every 2.minute do
+  command "echo 'you can use raw cron syntax too'" , :environment => :development
+  #runner "TestJob"
+  #rake "pointage:perform"
 end
 #
 # every 4.days do

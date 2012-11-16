@@ -1,16 +1,23 @@
 module PointagesController
   class Action < ApplicationController::Action
+    
+    include ApplicationHelper::Status
     before_filter :authenticate_user!
-    def format_pointage(pointages)
-      tab = Array.new()
-      pointages.each do |point|
-        @pointage= Hash.new()
-        @pointage["point"] = point
-        @pointage["user"] = point.user
-        tab << @pointage
+
+    def calculDuree (point, param)
+      if(param == VALUE_MAP[HEURE_PAUSE])
+        puts "t1    #{point.dr}"
+      duree = point.hp.to_time - point.hs.to_time
+      elsif(param == VALUE_MAP[HEURE_END])
+        puts "t2       #{point.dr}"
+      duree = point.dr + (point.he.to_time - point.hr.to_time)
+      else
+        puts "t3    #{point.dr}"
+      duree = point.dr
       end
-      return tab
+      return duree
     end
+
   end
 
   class Singular < Action
@@ -28,22 +35,9 @@ module PointagesController
   end
 
   class Findallpointagebyuser < Index
-    expose(:all_pointages){pointages.all}
-
-    def call
-      @result = format_pointage(all_pointages)
-      respond_with(@result,location: pointages_url)
-    end
-    
-  end
-
-  class Findlastpointage < Singular
-    expose(:last_pointages){pointages.last}
-
-    def call
-      #Resque.enqueue(TestJob)
-      respond_with(last_pointages,location: pointages_url)
-    end
+    expose(:all_pointages){
+      pointages.all
+    }
   end
 
   class Findpointagebetween < Index
@@ -56,14 +50,9 @@ module PointagesController
         pointages.where(:heure_start.lte => Date.parse(params[:inf]))
       end
     }
-
-    def call
-        @result = format_pointage(between_pointages)
-      respond_with(@result,location: pointages_url)
-    end
   end
 
-  class Create < Singular
+  class Create < Index
     expose(:pointage_exist){pointages.where(:heure_start.gt => Date.today)}
 
     def call
@@ -72,25 +61,27 @@ module PointagesController
       else
         pointage = Pointage.new()
         pointage.user_id = current_user.id
-        pointage.heure_start = DateTime.now
+        current_DateTime = DateTime.now
+        pointage.heure_start = current_DateTime
+        pointage.heure_pause = current_DateTime
+        pointage.heure_reprise = current_DateTime
+        pointage.heure_end = current_DateTime
         pointage.save
-        #respond_with(user, location: users_url)
         respond_with(pointage)
       end
     end
   end
 
   class Update < Singular
-    expose(:lst_pointages) {pointages.where(:heure_start.gt => DateTime.now.to_date)}
+    expose(:point) {pointages.last}
 
     def call
-      lst_pointages.each do |point|
-        point.update_attribute(params[:type], DateTime.now)
-        point.save
-      end
-      respond_with(lst_pointages.all.to_a)
+      point.update_attribute(params[:type], DateTime.now)
+      duree = calculDuree(point,params[:type])
+      point.update_attribute(:dr, duree)
+      point.save
+      respond_with(point)
     end
-
   end
 
 end
