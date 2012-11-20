@@ -1,3 +1,3 @@
 collection :updatedusers, root: :users
 
-extends('users/index')
+attributes :id, :email, :name, :admin, :solde_conge, :solde_recup
