@@ -9,16 +9,16 @@ module UsersController
 
   class Index < Action
     expose(:users) {
-        User.where(:id => current_user.id)
+      User.where(:id => current_user.id)
     }
   end
 
- class Showall < Index
+  class Showall < Index
     expose(:all_users){
       if current_user.admin?
         User.all
       else
-         User.where(:id => current_user.id)
+        User.where(:id => current_user.id)
       end
     }
   end

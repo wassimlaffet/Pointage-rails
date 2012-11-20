@@ -1,50 +1,70 @@
 module DemandesController
   class Action < ApplicationController::Action
-    #before_filter :authenticate_user!
+    before_filter :authenticate_user!
   end
-
+ 
   class Index < Action
-    expose(:demandes) {
+    expose(:demandes)
+    
+    def call
       if !current_user.admin?
-        current_user.demandes
+        @demandes = current_user.demandes.order_by(:date_creation => :desc)
       else
-        Demande.all
+        @demandes = Array.new
+        User.all.each do |user|
+          user.demandes.not_valides.each do |demande|
+            @demandes << demande            
+          end
+        end
       end
-    }
+    end
   end
-
-  class ShowByDates < Index
-    expose(:demandes_Between){
-      if !(params[:inf]).nil? && !(params[:sup]).nil?
-        demandes.between(params[:type].to_sym => Date.parse(params[:inf]) .. Date.parse(params[:sup])+1)
-      elsif !(params[:sup]).nil?
-        demandes.where((params[:type].to_sym).gte => Date.parse(params[:sup])+1)
-      elsif !(params[:inf]).nil?
-        demandes.where((params[:type].to_sym).lte => Date.parse(params[:inf]))
-      end
-    }
+ 
+  class ByDate < Action
+    expose(:demandes)    
 
     def call
-      puts "++++++++++++++++++#{demandes_Between.count}"
-       respond_with("coooool", location: demandes_url)
+      @demandes = Array.new
+      if current_user.admin && params[:date_inf] && params[:date_sup]
+        User.all.each do |user|
+          user.demandes.between(date_depart: Date.parse(params[:date_inf]) .. Date.parse(params[:date_sup])+1).each do |demande|
+            @demandes << demande
+          end
+        end
+      end      
     end
   end
 
   class Create < Action
     expose(:demande)
     def call
-      puts "*********************type: #{params[:type]}"
-      puts "*********************demande: #{params[:demande]}"
       @demande = Demande.for_type(params[:type]).new(params[:demande])
 
       if demande.valid?
         demande.date_creation = DateTime.now
         demande.user = current_user
         demande.save(validate: false)
-        puts "********************* create demande OK"
       end
 
       respond_with(demande, location: demandes_url)
+    end
+  end
+
+  class Valider < Action
+    def call
+      if params[:demandes]
+        params[:demandes].each do |demande|
+          users = User.where(_id: demande["user_id"])
+          if users.exists?
+            dems = users.first.demandes.where(_id: demande["id"])
+            if dems.exists?
+              dems.first.valider
+            end
+          end
+        end
+      end
+      
+      respond_with("validation ok", location: demandes_url)
     end
   end
 end
