@@ -7,13 +7,13 @@ PointageRails::Application.routes.draw do
   focused_controller_routes do
     resources :users
     resources :pointages
-    get '/pointage/findbetween' => 'pointages#findpointagebetween'
-    get '/pointage/findall' => 'pointages#findallpointagebyuser'
-    get '/pointage/update' => 'pointages#update'
-    get '/pointage/create' => 'pointages#create'
-    get '/user/getall' => 'users#showall'
-    get 'user/delete' => 'users#destroy'
-    post '/user/update' => 'users#updatesoldeusers'
+    get '/pointages/findbetween' => 'pointages#findpointagebetween'
+    get '/pointages/findall' => 'pointages#findallpointagebyuser'
+    get '/pointages/update' => 'pointages#update'
+    get '/pointages/create' => 'pointages#create'
+    get '/users/getall' => 'users#showall'
+    get 'users/delete' => 'users#destroy'
+    post '/users/update' => 'users#updatesoldeusers'
     resources :demandes
   end
 

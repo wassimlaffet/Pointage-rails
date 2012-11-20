@@ -30,7 +30,7 @@ module UsersController
       users = params[:users]
 
       users.each do |user|
-        if !user[:id].nil?
+        if user[:id]
           current = User.find(user[:id])
           current.update_attribute(:sc,user[:soldeConge]) if !user[:soldeConge].nil?
           current.update_attribute(:sr,user[:soldeRecup]) if !user[:soldeRecup].nil?
