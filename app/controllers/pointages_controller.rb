@@ -32,9 +32,17 @@ module PointagesController
   end
 
   class Findallpointagebyuser < Index
-    expose(:all_pointages){
-      pointages.all
-    }
+    expose(:all_pointages){Array.new}
+
+      def call
+        if(params[:mail].nil?)
+      @all_pointages = pointages.all.to_a
+      else
+        pointages.each do |point|
+          all_pointages << point if point.user.email == params[:mail]
+        end     
+      end
+      end
   end
 
   class Findpointagebetween < Index
