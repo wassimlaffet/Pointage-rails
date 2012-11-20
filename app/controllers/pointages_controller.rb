@@ -1,16 +1,15 @@
 module PointagesController
   class Action < ApplicationController::Action
-    
+
     include ApplicationHelper::Status
     before_filter :authenticate_user!
-
     def calculDuree (point, param)
-      if(param == VALUE_MAP[HEURE_PAUSE])
-      duree = point.hp.to_time - point.hs.to_time
+      if(param == VALUE_MAP[ HEURE_PAUSE])
+        duree = point.hp.to_time - point.hs.to_time
       elsif(param == VALUE_MAP[HEURE_END])
-      duree = point.dr + (point.he.to_time - point.hr.to_time)
+        duree = point.dr + (point.he.to_time - point.hr.to_time)
       else
-      duree = point.dr
+        duree = point.dr
       end
       return duree
     end
@@ -21,12 +20,12 @@ module PointagesController
     expose(:pointages) {Pointage.where(:user_id => current_user.id)}
   end
 
-  class Index < Singular
+  class Index < Action
     expose(:pointages) {
       if !current_user.admin?
         Pointage.where(:user_id => current_user.id).order_by(:heure_start => :desc)
       else
-        Pointage.all
+        Pointage.all.order_by(:heure_start => :desc)
       end
     }
   end
@@ -34,15 +33,15 @@ module PointagesController
   class Findallpointagebyuser < Index
     expose(:all_pointages){Array.new}
 
-      def call
-        if(params[:mail].nil?)
-      @all_pointages = pointages.all.to_a
+    def call
+      if(params[:mail].nil?)
+        @all_pointages = pointages.all.to_a
       else
         pointages.each do |point|
           all_pointages << point if point.user.email == params[:mail]
-        end     
+        end
       end
-      end
+    end
   end
 
   class Findpointagebetween < Index
@@ -57,7 +56,7 @@ module PointagesController
     }
   end
 
-  class Create < Index
+  class Create < Singular
     expose(:pointage_exist){pointages.where(:heure_start.gte => Date.today)}
 
     def call
@@ -72,7 +71,7 @@ module PointagesController
         pointage.heure_reprise = current_DateTime
         pointage.heure_end = current_DateTime
         pointage.save
-        respond_with(pointage)
+        respond_with(pointage,location:pointages_url)
       end
     end
   end
@@ -82,15 +81,15 @@ module PointagesController
 
     def call
       if(!point.nil?)
-      point.update_attribute(params[:type], DateTime.now)
-      duree = calculDuree(point,params[:type])
-      point.update_attribute(:dr, duree)
-      point.save
-      respond_with(point)
+        point.update_attribute(params[:type], DateTime.now)
+        duree = calculDuree(point,params[:type])
+        point.update_attribute(:dr, duree)
+        point.save
+        respond_with(point)
       else
-         respond_with("warning : pas de pointage", location:pointages_url)
+        respond_with("warning : pas de pointage", location:pointages_url)
       end
-      
+
     end
   end
 
