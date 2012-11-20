@@ -46,7 +46,7 @@ module UsersController
 
     def call
       if user_del.nil?
-        respond_with("failed : can not find this user",location: users_url)
+        respond_with("warning : can not find this user",location: users_url)
       elsif !user_del.destroy
         respond_with("failed : can not delete this user",location: users_url)
       else
