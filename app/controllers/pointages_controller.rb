@@ -24,7 +24,7 @@ module PointagesController
   class Index < Singular
     expose(:pointages) {
       if !current_user.admin?
-        Pointage.where(:user_id => current_user.id).order_by(:heure_start => "desc")
+        Pointage.where(:user_id => current_user.id).order_by(:heure_start => :desc)
       else
         Pointage.all
       end
