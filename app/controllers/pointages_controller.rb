@@ -2,7 +2,7 @@ module PointagesController
   class Action < ApplicationController::Action
     
     include ApplicationHelper::Status
-    #before_filter :authenticate_user!
+    before_filter :authenticate_user!
 
     def calculDuree (point, param)
       if(param == VALUE_MAP[HEURE_PAUSE])

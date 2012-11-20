@@ -12,7 +12,7 @@ PointageRails::Application.routes.draw do
     get '/pointage/update' => 'pointages#update'
     get '/pointage/create' => 'pointages#create'
     get 'user/delete' => 'users#destroy'
-    post '/user/update' => 'users#updateSoldeUsers'
+    post '/user/update' => 'users#updatesoldeusers'
     resources :demandes
   end
 
