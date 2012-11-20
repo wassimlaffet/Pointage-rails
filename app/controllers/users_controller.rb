@@ -11,10 +11,6 @@ module UsersController
     expose(:users) {
         User.where(:id => current_user.id)
     }
-
-    def call
-      #respond_with(users,location: users_url)
-    end
   end
 
  class Showall < Index

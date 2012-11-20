@@ -58,11 +58,11 @@ module PointagesController
   end
 
   class Create < Index
-    expose(:pointage_exist){pointages.where(:heure_start.gt => Date.today)}
+    expose(:pointage_exist){pointages.where(:heure_start.gte => Date.today)}
 
     def call
       if pointage_exist.count > 0
-        respond_with("Pointage already exist !!!!!!!!!!!!!!!!!",location: pointages_url)
+        respond_with("Pointage already exist !!!!!!",location: pointages_url)
       else
         pointage = Pointage.new()
         pointage.user_id = current_user.id
@@ -78,14 +78,19 @@ module PointagesController
   end
 
   class Update < Singular
-    expose(:point) {pointages.last}
+    expose(:point) {pointages.where(:heure_start.gte => Date.today).last}
 
     def call
+      if(!point.nil?)
       point.update_attribute(params[:type], DateTime.now)
       duree = calculDuree(point,params[:type])
       point.update_attribute(:dr, duree)
       point.save
       respond_with(point)
+      else
+         respond_with("warning : pas de pointage", location:pointages_url)
+      end
+      
     end
   end
 
