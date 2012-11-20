@@ -1,3 +1,3 @@
-collection :pointages, root: :pointes
+collection :pointages, root: :pointages
 
 attributes :heure_start, :heure_pause, :heure_reprise, :duree, :heure_end, :user

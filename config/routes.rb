@@ -11,6 +11,7 @@ PointageRails::Application.routes.draw do
     get '/pointage/findall' => 'pointages#findallpointagebyuser'
     get '/pointage/update' => 'pointages#update'
     get '/pointage/create' => 'pointages#create'
+    get '/user/getall' => 'users#showall'
     get 'user/delete' => 'users#destroy'
     post '/user/update' => 'users#updatesoldeusers'
     resources :demandes

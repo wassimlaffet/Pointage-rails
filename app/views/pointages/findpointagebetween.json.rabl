@@ -1,3 +1,3 @@
 collection :between_pointages, root: :pointages
 
-extends('pointages/index')
+attributes :heure_start, :heure_pause, :heure_reprise, :duree, :heure_end, :user

@@ -9,16 +9,22 @@ module UsersController
 
   class Index < Action
     expose(:users) {
-      if current_user.admin?
         User.where(:id => current_user.id)
-      else
-        User.all
-      end
     }
 
     def call
       #respond_with(users,location: users_url)
     end
+  end
+
+ class Showall < Index
+    expose(:all_users){
+      if current_user.admin?
+        User.all
+      else
+         User.where(:id => current_user.id)
+      end
+    }
   end
 
   class Updatesoldeusers < Index
