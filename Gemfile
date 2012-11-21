@@ -43,6 +43,7 @@ group :test do
   gem 'timecop'
 end
 
+gem 'cancan'
 gem 'database_cleaner'
 gem 'resque'
 gem 'resque-scheduler', require: 'resque_scheduler'

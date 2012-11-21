@@ -1,10 +1,7 @@
 module UsersController
   class Action < ApplicationController::Action
     before_filter :authenticate_user!
-  end
-
-  class Singular < Action
-  #expose(:user) { User.where(:id => current_user.id) }
+    #load_and_authorize_resource :user
   end
 
   class Index < Action
@@ -21,6 +18,7 @@ module UsersController
         User.where(:id => current_user.id)
       end
     }
+      
   end
 
   class Updatesoldeusers < Index
