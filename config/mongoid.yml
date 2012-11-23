@@ -44,7 +44,7 @@ development:
 
     # Preload all models in development, needed when models use
     # inheritance. (default: false)
-    preload_models: false
+    # preload_models: false
 
     # Protect id and type from mass assignment. (default: true)
     # protect_sensitive_fields: true
@@ -55,7 +55,7 @@ development:
 
     # Raise an error when defining a scope with the same name as an
     # existing method. (default: false)
-     scope_overwrite_exception: true
+    # scope_overwrite_exception: false
 
     # Skip the database version check, used when connecting to a db without
     # admin access. (default: false)

@@ -49,6 +49,6 @@ class User
       
   has_many :pointages
   
-  embeds_many :demandes  
+  #embeds_many :demandes  
   
 end
