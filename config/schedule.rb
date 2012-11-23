@@ -11,10 +11,10 @@
 set :environment, :development
 set :output, 'app/log/development.log'
 
-every 2.minute do
-  command "echo 'you can use raw cron syntax too'" , :environment => :development
+every 1.minute do
+  #command "echo 'you can use raw cron syntax too'" , :environment => :development
   #runner "TestJob"
-  #rake "pointage:perform"
+  rake "resque:work"
 end
 #
 # every 4.days do
