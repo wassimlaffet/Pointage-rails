@@ -27,7 +27,7 @@ module DemandesController
       @demandes = Array.new
       if current_user.admin && params[:date_inf] && params[:date_sup]
         User.all.each do |user|
-          user.demandes.between(date_depart: Date.parse(params[:date_inf]) .. Date.parse(params[:date_sup])+1).each do |demande|
+          user.demandes.between(date_depart: Date.parse(params[:date_inf]) .. Date.parse(params[:date_sup])).each do |demande|
             @demandes << demande
           end
         end
