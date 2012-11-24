@@ -1,8 +1,6 @@
 module TestJob
   @queue = :job1
   def self.perform()
-
-    Resque.enqueue(self)
    
     pointages = Pointage.where(:hs.gte => Date.today)
     puts "count **** #{pointages.count}"

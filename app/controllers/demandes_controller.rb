@@ -28,7 +28,9 @@ module DemandesController
       puts "******************** date_inf: #{DateTime.parse(params[:date_inf])}   date_sup #{DateTime.parse(params[:date_sup])}"
       if current_user.admin && params[:date_inf] && params[:date_sup]
         User.all.each do |user|
-          user.demandes.between(date_depart: DateTime.parse(params[:date_inf]) .. DateTime.parse(params[:date_sup])).each do |demande|
+          
+          user.demandes.between(date_depart: Date.parse(params[:date_inf]) .. Date.parse(params[:date_sup])).each do |demande|
+
             @demandes << demande
           end
         end
