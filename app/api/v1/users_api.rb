@@ -58,8 +58,5 @@ module V1
       #render json: updatedusers
        end
      end
-  
->>>>>>> ba1a4254f40e3aaa53f4965821e813b9f08216d4
   end
-
 end
