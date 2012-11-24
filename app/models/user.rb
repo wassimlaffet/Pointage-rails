@@ -49,6 +49,13 @@ class User
       
   has_many :pointages
   
-  embeds_many :demandes  
+  embeds_many :demandes
   
+  embeds_many :voitures 
+end
+
+class Voiture
+  include Mongoid::Document
+  
+  embedded_in :user
 end
