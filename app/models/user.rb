@@ -51,11 +51,5 @@ class User
   
   embeds_many :demandes
   
-  embeds_many :voitures 
-end
-
-class Voiture
-  include Mongoid::Document
-  
-  embedded_in :user
+  embeds_many :vehicules
 end

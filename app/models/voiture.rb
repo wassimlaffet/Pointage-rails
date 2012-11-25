@@ -1,0 +1,2 @@
+class Voiture < Vehicule
+end

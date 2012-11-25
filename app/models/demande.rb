@@ -14,6 +14,11 @@ class Demande
     Demandes.const_get(type.classify)
   end
   
+  def initialize(attrs = nil, options = nil)
+    super
+    puts "********************** test"
+  end
+  
   def valider
     self.validee = true
     save

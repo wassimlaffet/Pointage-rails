@@ -1,0 +1,2 @@
+class Moto < Vehicule
+end
