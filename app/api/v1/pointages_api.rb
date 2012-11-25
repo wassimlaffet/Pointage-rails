@@ -19,9 +19,10 @@ module V1
       expose(:all_pointages){Array.new}
 
       response do
-        if(current_user.admin? && params[:mail].nil?)
+        if(current_user.admin? && (params[:mail].nil? || params[:mail].empty?))
+          puts "*********************#{Pointage.all.to_a}"
           @all_pointages = Pointage.all.to_a
-        elsif(current_user.admin? && !params[:mail].nil?)
+        elsif(current_user.admin? && (!params[:mail].nil? || !params[:mail].blank?))
           Pointage.all.each do |point|
             all_pointages << point if point.user.email == params[:mail]
           end

@@ -47,9 +47,10 @@ class User
   field :admin,                               type: Boolean, :default => false
   validates :email, presence: true, format: { with: /\A[a-z0-9]([\w+-]\.?)*@([\w]+\.)+[a-z]{2,3}\z/i }
       
-  has_many :pointages
+  has_many :pointages, dependent: :destroy
   
   embeds_many :demandes
   
   embeds_many :vehicules
+
 end
