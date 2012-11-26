@@ -21,12 +21,13 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'raisin'
 gem 'mongoid'
 gem 'focused_controller'
 gem 'devise'
 gem 'oj'
-gem 'rabl-rails', '~> 0.2.0'
+gem 'rabl-rails', '~> 0.3.0'
+#gem 'thin'
 
 
 group :development do

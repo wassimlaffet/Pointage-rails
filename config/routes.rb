@@ -3,24 +3,24 @@ PointageRails::Application.routes.draw do
 # first created -> highest priority.
 
   devise_for :users
-
-  focused_controller_routes do
-    
-    resources :users
-    get '/user/delete' => 'users#destroy'
-    post '/user/update' => 'users#updatesoldeusers'
-    get '/user/getall' => 'users#showall'
-    
-    resources :pointages
-    get '/pointage/findbetween' => 'pointages#findpointagebetween'
-    get '/pointage/findall' => 'pointages#findallpointagebyuser'
-    get '/pointage/update' => 'pointages#update'
-    get '/pointage/create' => 'pointages#create'
-
-    resources :demandes
-    post '/demandes/valider' => 'demandes#valider'
-    post '/demandes/bydate' => 'demandes#ByDate'
-  end
+  mount_api Api
+# focused_controller_routes do
+#   
+#   resources :users
+#   get '/user/delete' => 'users#destroy'
+#   post '/user/update' => 'users#updatesoldeusers'
+#   get '/user/getall' => 'users#showall'
+#   
+#   resources :pointages
+#   get '/pointage/findbetween' => 'pointages#findpointagebetween'
+#   get '/pointage/findall' => 'pointages#findallpointagebyuser'
+#   get '/pointage/update' => 'pointages#update'
+#   get '/pointage/create' => 'pointages#create'
+#
+#   resources :demandes
+#   post '/demandes/valider' => 'demandes#valider'
+#   post '/demandes/bydate' => 'demandes#ByDate'
+# end
 
 # Sample of regular route:
 #   match 'products/:id' => 'catalog#view'
