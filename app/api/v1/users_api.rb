@@ -25,7 +25,7 @@ module V1
       #end
     end
 
-    delete '/deleteUser' do
+    delete '/deleteUser', as: "deleteuser" do
       expose(:user_del){User.where(:id => params[:id]).first}
       response do
         result = nil

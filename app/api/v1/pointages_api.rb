@@ -76,7 +76,7 @@ module V1
       expose(:new_pointage)
 
       response do
-        if Pointage.where(:user_id => current_user.id).where(:heure_start.gte => Date.today).count > 0
+        if Pointage.where(:user_id => current_user.id).where(:heure_start.gte => Date.today).count > 0          
           render json: "Pointage already exist !!!!!!"
         else
           pointage = Pointage.new()
