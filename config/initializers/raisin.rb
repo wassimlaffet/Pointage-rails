@@ -2,8 +2,8 @@ Raisin.configure do |api|
   api.version.using   = :header
   api.version.vendor  = 'captaindash'
 
-  api.enable_auth_by_default = false
-   api.default_auth_method  = :authenticate_user!
+  api.enable_auth_by_default = true
+   #api.default_auth_method  = :authenticate_user!
 end
 
 class Raisin::Base
