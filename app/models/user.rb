@@ -46,16 +46,8 @@ class User
   field :name,                                type: String
   field :admin,                               type: Boolean, :default => false
   validates :email, presence: true, format: { with: /\A[a-z0-9]([\w+-]\.?)*@([\w]+\.)+[a-z]{2,3}\z/i }
-      
-  has_many :pointages
-  
-  embeds_many :demandes
-  
-  embeds_many :voitures 
-end
 
-class Voiture
-  include Mongoid::Document
+  has_many :pointages, dependent: :destroy
   
-  embedded_in :user
+  embeds_many :demandes  
 end

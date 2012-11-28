@@ -49,10 +49,12 @@ module V1
          users.each do |user|
            if user[:id]
              current = User.find(user[:id])
+             if !current.nil?
              current.update_attribute(:sc,user[:soldeConge]) if !user[:soldeConge].nil?
              current.update_attribute(:sr,user[:soldeRecup]) if !user[:soldeRecup].nil?
              current.update_attribute(:admin,user[:admin]) if !user[:admin].nil?
              updatedusers << current
+             end
            end
          end
       #render json: updatedusers
