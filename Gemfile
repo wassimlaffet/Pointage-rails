@@ -29,6 +29,8 @@ gem 'oj'
 gem 'rabl-rails', '~> 0.3.0'
 #gem 'thin'
 
+gem 'tiny_tds'
+
 
 group :development do
   gem 'rspec-rails'
@@ -49,6 +51,7 @@ gem 'database_cleaner'
 gem 'resque'
 gem 'resque-scheduler', require: 'resque_scheduler'
 gem 'whenever'
+gem 'soap4r'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
